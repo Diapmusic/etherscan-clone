@@ -1,0 +1,46 @@
+div {
+  div {
+    h4 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 11px;
+    }
+  
+    background-color: #cccccc;
+    border: 2px groove black;
+    padding: 2px;
+    font-family: helvetica;
+  }
+}
+
+table {
+  text-align: left;
+  tr {
+    th {
+      padding-top: 2px;
+      padding-bottom: 2px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    td {
+      padding-top: 1px;
+      padding-bottom: 1px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+  }
+}
+
+.subheading {
+  font-size: 12px;
+}
+.regular {
+  font-size: 12px;
+  span {
+    font-size: 10px;
+  }
+}
+.timestamp {
+  font-size: 10px;
+}
