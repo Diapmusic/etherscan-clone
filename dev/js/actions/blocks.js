@@ -2,10 +2,10 @@ const superagent = require('superagent')
 
 const lastTwentyBlocks = (recentHex,blocksLoading,blocksSuccess,dispatch) => {
   var baseTen = parseInt(recentHex);
-  var holder = Array(20);
+  var holder = [];
   var index = 0;
 
-  for (var i=(baseTen - 20); i<=baseTen; i++) {
+  for (var i=(baseTen - 19); i<(baseTen+1); i++) {
     var urlSubstitute = Number(i).toString(16);
 
     superagent
@@ -14,9 +14,12 @@ const lastTwentyBlocks = (recentHex,blocksLoading,blocksSuccess,dispatch) => {
         if (err) {
           throw Error(response.statusText)
         }
-        holder[index] = response.body.result;
+        holder.push(response.body.result);
         index ++;
         if (index === 20) {
+          holder.sort((a,b) => {
+            return (parseInt(b.timestamp) - parseInt(a.timestamp))
+          });
           dispatch(blocksSuccess(holder))
           dispatch(blocksLoading(false))
         };
@@ -53,7 +56,7 @@ export const fetchBlocks = () => {
   };
 }
 
-export const selectBlock = (bool,blockNumber) => {
+export const selectBlock = (bool) => {
   return {
     type: 'BLOCK_SELECTED',
     isSelected: bool

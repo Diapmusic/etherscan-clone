@@ -35,7 +35,7 @@ class Blocks extends Component {
             </tr>
             <tr>
               <th>Transactions</th>
-              <td>{console.log(activeBlock)}</td>
+              <td>{activeBlock.transactions.length} transactions in this block</td>
             </tr>
             <tr>
               <th>Hash</th>
@@ -75,16 +75,8 @@ class Blocks extends Component {
       return (<p>'Fetching blocks...'</p>);
     }
 
-    var orderedBlockList = [];
-    var unorderedBlockList = this.props.blockList;
-    unorderedBlockList.map((block) => {
-      orderedBlockList.push(block)
-    });
-    orderedBlockList = orderedBlockList.sort((a,b) => {
-      return parseInt(a.timestamp) - parseInt(b.timestamp)});
-
     return (
-      orderedBlockList.map((block) => {
+      this.props.blockList.map((block) => {
         return (
           <div key={block.number} className='block' 
           onClick={
@@ -93,7 +85,7 @@ class Blocks extends Component {
               this.props.activateBlockGo(block.number);
               }
             }>
-            Block Number: {block.number}
+            Block Number: {parseInt(block.number,16)}
             <br />
             <span>
               {beautifyTime(parseInt(block.timestamp,16))}
@@ -122,7 +114,9 @@ class Blocks extends Component {
               }}> X </span>
             <h3>Block Information</h3>
             <hr />
-            {this.getActiveBlock(this.props.activeBlock)}
+            <div>
+              {this.getActiveBlock(this.props.activeBlock)}
+            </div>
           </div>
         </div>
       </div>
@@ -131,6 +125,7 @@ class Blocks extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         blocksLoading: state.blocksLoading,
         blockList: state.blockList,

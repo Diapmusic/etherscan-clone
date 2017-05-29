@@ -1,6 +1,7 @@
 import React from 'react';
 import GeneralInfo from '../containers/general';
 import Blocks from '../containers/blocks';
+import Txns from '../containers/transactions';
 import styles from '../../scss/style.scss';
 
 const App = () => (
@@ -12,6 +13,8 @@ const App = () => (
       <br />
       <h3>Most Recent Blocks</h3>
       <Blocks />
+      <h3>Most Recent Transactions</h3>
+      <Txns />
     </div>
 );
 

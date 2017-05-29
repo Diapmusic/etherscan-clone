@@ -53,9 +53,9 @@ table {
     border: 2px solid black;
     float: top;
     margin-top: 4px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding: 2px;
     font-size: 12px;
+    cursor: pointer;
     span {
       font-size: 10px;
     }
@@ -80,8 +80,25 @@ table {
   height: 100%;
   background-color: rgba(0,0,0,0.4);
   div {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: 600px;
+    height: 400px;
+    margin: auto;
+    z-index: 2;
+    background-color: white;
+    div {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: initial;
+      height: initial;
+      margin: initial;
+    }
     span {
       position: absolute;
+      cursor: pointer;
       right: 5px;
       top: 5px;
     }
@@ -93,17 +110,6 @@ table {
       font-weight: bold;
       font-family: helvetica;
     }   
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    width: 600px;
-    height: 400px;
-    margin: auto;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    z-index: 2;
-    background-color: white;
   }
 }
 
