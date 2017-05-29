@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {supplyLoading,supplyLoaded,priceLoading,priceLoaded} from './general';
-import {blocksLoading,blocksLoaded} from './blocks';
+import {blocksLoading,blocksLoaded,blockSelected,activeBlock} from './blocks';
 
 /*
  * We combine all reducers into a single object before updated data is dispatched (sent) to store
@@ -14,6 +14,8 @@ const allReducers = combineReducers({
     priceInfo: priceLoaded,
     blocksLoading: blocksLoading,
     blockList: blocksLoaded,
+    blockSelected: blockSelected,
+    activeBlock: activeBlock
 });
 
 export default allReducers

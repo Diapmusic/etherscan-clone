@@ -19,7 +19,7 @@ class GeneralInfo extends Component {
       return (<p>'Fetching stats...'</p>);
     }
     return (
-      <table>
+      <table className='infoBox'>
         <tbody>
           <tr>
             <th className='subheading'>Total Supply</th>

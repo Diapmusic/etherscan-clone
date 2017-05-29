@@ -7,7 +7,6 @@ const lastTwentyBlocks = (recentHex,blocksLoading,blocksSuccess,dispatch) => {
 
   for (var i=(baseTen - 20); i<=baseTen; i++) {
     var urlSubstitute = Number(i).toString(16);
-    console.log("Getting block #" + i);
 
     superagent
       .get('https://api.etherscan.io/api?module=proxy&action=eth_getBlockByNumber&tag=0x' + urlSubstitute + '&boolean=true&apikey=55BU3IFQWCNWSHHPNK9KWE7TIQK7TVXTFI')
@@ -15,7 +14,6 @@ const lastTwentyBlocks = (recentHex,blocksLoading,blocksSuccess,dispatch) => {
         if (err) {
           throw Error(response.statusText)
         }
-        console.log("Got block #" + i);
         holder[index] = response.body.result;
         index ++;
         if (index === 20) {
@@ -53,4 +51,18 @@ export const fetchBlocks = () => {
         lastTwentyBlocks(response.body.result,blocksLoading,blocksSuccess,dispatch);
       })
   };
+}
+
+export const selectBlock = (bool,blockNumber) => {
+  return {
+    type: 'BLOCK_SELECTED',
+    isSelected: bool
+  }
+}
+
+export const activateBlock = (blockNumber) => {
+  return {
+    type: 'BLOCK_ACTIVATED',
+    activeBlock: blockNumber
+  }
 }

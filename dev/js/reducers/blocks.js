@@ -17,3 +17,23 @@ export function blocksLoaded (state = null, action) {
       return state;
   }
 }
+
+export function blockSelected (state = false, action) {
+  switch (action.type) {
+    case 'BLOCK_SELECTED':
+      return action.isSelected;
+
+    default:
+      return state;
+  }
+}
+
+export function activeBlock (state = null, action) {
+  switch (action.type) {
+    case 'BLOCK_ACTIVATED':
+      return action.activeBlock;
+
+    default:
+      return state;
+  }
+}
