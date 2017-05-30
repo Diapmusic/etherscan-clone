@@ -29,6 +29,7 @@ export const priceSuccess = (data) => {
 }
 
 export const fetchSupply = () => {
+  //fetch the total supply of ether
   return (dispatch) => {
     dispatch(supplyLoading(true));
 
@@ -39,13 +40,14 @@ export const fetchSupply = () => {
           throw Error(response.statusText)
         }
         dispatch(supplyLoading(false));
-        dispatch(supplySuccess(response.body.result/1000000000000000000))
+        dispatch(supplySuccess(response.body.result/1000000000000000000)) //divide by this amount because etherscan.io gives the result back in wei
       })
   };
 }
 
 
 export const fetchPrice = () => {
+  //fetch the latest price of ether
   return (dispatch) => {
     dispatch(priceLoading(true));
 

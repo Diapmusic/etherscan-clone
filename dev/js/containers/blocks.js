@@ -4,16 +4,19 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 const beautifyTime = (unixtime) => {
+  // etherscan.io provides timestamps in unix format, so this converts it to regular format.
     var holder = new Date(Number(unixtime) * 1000)
     return (holder.toString());
   }
 
 class Blocks extends Component {
   componentDidMount () {
+    // on mount, get the most recent 20 blocks.
     this.props.fetchBlocksGo()
   }
 
   getActiveBlock (blockNumber) {
+    // when a user clicks a block, get the block info and display it.
     var activeBlock = null;
     if (blockNumber) {
       this.props.blockList.map(
@@ -71,6 +74,7 @@ class Blocks extends Component {
   }
 
   renderBlocks() {
+    // function to render each individual block
     if (this.props.blocksLoading) {
       return (<p>'Fetching blocks...'</p>);
     }
@@ -97,6 +101,7 @@ class Blocks extends Component {
   }
 
   render() {
+    // put all the rendered blocks into a little scrollable div
     if (this.props.blocksLoading) {
       return (<p>'Fetching blocks...'</p>);
     }

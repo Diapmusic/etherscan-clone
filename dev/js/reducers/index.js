@@ -1,12 +1,10 @@
 import {combineReducers} from 'redux';
 import {supplyLoading,supplyLoaded,priceLoading,priceLoaded} from './general';
 import {blocksLoading,blocksLoaded,blockSelected,activeBlock} from './blocks';
+import {graphLoading,graphLoaded} from './graph';
 import {txnSelected,activeTxn} from './transactions';
 
-/*
- * We combine all reducers into a single object before updated data is dispatched (sent) to store
- * Your entire applications state (store) is just whatever gets returned from all your reducers
- * */
+// just some redux stuff, combining all the reducers so the store can have all the info
 
 const allReducers = combineReducers({
     ethSupply: supplyLoaded,
@@ -18,7 +16,9 @@ const allReducers = combineReducers({
     blockSelected: blockSelected,
     activeBlock: activeBlock,
     activeTxn: activeTxn,
-    txnSelected: txnSelected
+    txnSelected: txnSelected,
+    graphLoading: graphLoading,
+    graphData: graphLoaded
 });
 
 export default allReducers

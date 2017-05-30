@@ -10,6 +10,7 @@ const beautifyTime = (unixtime) => {
 
 class GeneralInfo extends Component {
   componentDidMount () {
+    // on mount, get the most recent supply and price
     this.props.fetchSupplyGo()
     this.props.fetchPriceGo()
   }

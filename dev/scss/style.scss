@@ -1,3 +1,5 @@
+// i am aware that these are bad
+
 table {
   text-align: left;
   tr {
@@ -21,6 +23,19 @@ table {
   padding: 2px;
   font-family: helvetica;
   width: 520px;
+}
+
+.section {
+  background-color: #cccccc;
+  border: 2px groove black;
+  padding: 2px;
+  font-family: helvetica;
+  margin: 0px;
+  width: 470px;
+  height: 400px;
+  position: relative;
+  display: inline-block;
+  float: left;
 }
 
 .infoBox {
@@ -54,7 +69,7 @@ table {
     float: top;
     margin-top: 4px;
     padding: 2px;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
     span {
       font-size: 10px;
@@ -114,12 +129,19 @@ table {
 }
 
 .blockInfo {
-  th {
-    font-size: 12px;
-    font-weight: bolder;
+  table {
+    tbody {
+      tr {
+        th {
+          font-size: 12px;
+          font-weight: bolder;
+        }
+        td {
+          font-size: 11px;
+          font-weight: normal;
+        }
+      }
+    }
   }
-  td {
-    font-size: 12px;
-    font-weight: normal;
-  }
+  
 }
