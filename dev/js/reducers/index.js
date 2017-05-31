@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import {supplyLoading,supplyLoaded,priceLoading,priceLoaded} from './general';
 import {blocksLoading,blocksLoaded,blockSelected,activeBlock} from './blocks';
-import {graphLoading,graphLoaded} from './graph';
-import {txnSelected,activeTxn} from './transactions';
+import {usdSuccess,btcSuccess,graphLoading} from './graph';
+import {txnSelected,activeTxn,txnReceipt,txnLoading} from './transactions';
 
 // just some redux stuff, combining all the reducers so the store can have all the info
 
@@ -18,7 +18,10 @@ const allReducers = combineReducers({
     activeTxn: activeTxn,
     txnSelected: txnSelected,
     graphLoading: graphLoading,
-    graphData: graphLoaded
+    txnReceipt: txnReceipt,
+    txnLoading: txnLoading,
+    usdGraphData: usdSuccess,
+    btcGraphData: btcSuccess
 });
 
 export default allReducers

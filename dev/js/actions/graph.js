@@ -7,9 +7,16 @@ export const graphLoading = (bool) => {
   }
 }
 
-export const graphSuccess = (data) => {
+export const usdSuccess = (data) => {
   return {
-    type: 'LOADED_GRAPH',
+    type: 'LOADED_USD',
+    payload: data
+  }
+}
+
+export const btcSuccess = (data) => {
+  return {
+    type: 'LOADED_BTC',
     payload: data
   }
 }
@@ -24,25 +31,68 @@ export const getGraphData = () => {
 
   return (dispatch) => {
     dispatch(graphLoading(true));
-    var re = new RegExp('data:(.*),');
 
     superagent
-      .get('https://etherscan.io/')
+      .get('https://poloniex.com/public?command=returnChartData&currencyPair=BTC_ETH&start=1495594023&end=9999999999&period=14400')
       .end((err, res) => {
         if (err) {
           throw Error(res.statusText)
         }
-        var data = re.exec(res.text)[1];
-        // clean up the data to make it JSON.parse-able
-        data = data.replace(/{y/g,'{"y"');
-        data = data.replace(/dt/g,'"dt"');
-        data = data.replace(/friendlydate/g,'"friendlydate"');
-        data = data.replace(/'/g,'"');
-        data = data.replace(/,  /g,'');
-        data = data.replace(',]', ']');
-        dispatch(graphSuccess(JSON.parse(data)))
+        dispatch(btcSuccess(res.body))
+      })
+
+    superagent
+      .get('https://etherchain.org/api/statistics/price')
+      .end((err, res) => {
+        if (err) {
+          throw Error(res.statusText)
+        }
+        dispatch(usdSuccess(res.body.data))
         dispatch(graphLoading(false))
       })
     }
   }
+/*
+const getBlockTxn = (blockNumber) => {
+
+}
+
+const getGraphData = (latestBlockNumber) => {
+  var timeNow = Date.now()/1000;
+  var index = 0;
+  var counter = latestBlockNumber;
+  var holder = [];
+
+  while (index < 1) {
+  var blockHex = Number(counter).toString(16)
+
+  superagent
+    .get('https://api.etherscan.io/api?module=proxy&action=eth_getBlockByNumber&tag=0x' + blockHex + '&boolean=true&apikey=55BU3IFQWCNWSHHPNK9KWE7TIQK7TVXTFI')
+    .end((err, res) => {
+      if (err) {
+        throw Error(res.statusText)
+      }
+      var blockTime = parseInt(res.body.result.timestamp,16);
+      var difference = timeNow - blockTime;
+      if (difference < (index+1) * 86400) {
+        holder[index] = holder[index] + res.body.result.transactions.length;
+      } else {
+        index ++;
+        holder[index] = holder[index] + res.body.result.transactions.length;
+      }
+      counter --
+    })
+  }
+  
+  console.log(holder);
+}
+*/
+
+
+
+
+
+
+
+
 

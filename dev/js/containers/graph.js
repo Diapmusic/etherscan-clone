@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {getGraphData} from '../actions/graph';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Bar} from 'react-chartjs-2'; // uses the react-chartjs-2 package
+import {Line} from 'react-chartjs-2'; // uses the react-chartjs-2 package
 
 class Graph extends Component {
   componentDidMount () {
@@ -13,22 +13,44 @@ class Graph extends Component {
     if (this.props.graphLoading) {
         return (<p> Graph Loading... </p>)
     } else {
-        var xData = [];
-        var yData = [];
-        for (var i=0;i<this.props.graphData.length;i++) {
-          xData.push(this.props.graphData[i].friendlydate);
-          yData.push(this.props.graphData[i].y);
-        }
+        var holder = this.props.usdGraphData;
+        holder = holder.filter(
+          (entry) => {
+            var time = new Date(entry.time)
+            return(time.getTime()/1000 > (Date.now()/1000 - 1209600))
+          });
+        var usdXData = holder.map(
+          (entry) => {
+            var time = new Date(entry.time)
+            return(time.getTime()/1000)
+        });
+        var usdYData = holder.map(
+          (entry) => {
+            return(entry.usd)
+          });
         var data = {
-          labels: xData,
+          labels: usdXData,
           datasets: [{
-            label: '# of transactions',
-            data: yData
+            label: 'Price (USD)',
+            data: usdYData,
+            pointRadius: 0
           }]
         }
-        console.log(xData);
+        var options = {
+        scales: {
+          xAxes: [{
+            ticks: {
+              // Include a dollar sign in the ticks
+              callback: (value, index, values) => {
+                var date = new Date(value*1000)
+                return (date.getMonth() + '/' + date.getDate())
+                }
+              }
+            }]
+          }
+        }
         return (
-          <Bar data={data} />
+          <Line data={data} options={options} />
           )
       }
   }
@@ -37,7 +59,8 @@ class Graph extends Component {
 const mapStateToProps = (state) => {
     return {
         graphLoading: state.graphLoading,
-        graphData: state.graphData
+        usdGraphData: state.usdGraphData,
+        btcGraphData: state.btcGraphData
     };
 }
 

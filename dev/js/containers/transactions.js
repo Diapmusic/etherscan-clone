@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {selectTxn,activateTxn} from '../actions/transactions';
+import {selectTxn,activateTxn,getTxnReceipt} from '../actions/transactions';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -22,9 +22,10 @@ class Txns extends Component {
               }
             }))
           })
-      console.log(activeTxn);
     }
-    if (activeTxn) {
+    if (this.props.txnLoading) {
+      return(<p> Fetching additional information... </p>)
+    } else if (activeTxn) {
       return (
         <div className='blockInfo'>
           <table>
@@ -38,6 +39,12 @@ class Txns extends Component {
               <td>{parseInt(activeTxn.blockNumber, 16)}</td>
             </tr>
             <tr>
+              <th>Timestamp</th>
+              <td>{beautifyTime(this.props.blockList.filter((block) => {
+                              return (block.number === activeTxn.blockNumber)
+                            })[0].timestamp)}</td>
+            </tr>
+            <tr>
               <th>From</th>
               <td>{activeTxn.from}</td>
             </tr>
@@ -47,7 +54,7 @@ class Txns extends Component {
             </tr>
             <tr>
               <th>Value</th>
-              <td>{activeTxn.value/1000000000000000000} ETH</td>
+              <td>{activeTxn.value/1000000000000000000} ETH (${(activeTxn.value/1000000000000000000) * this.props.priceInfo.ethusd} USD)</td>
             </tr>
             <tr>
               <th>Gas Limit</th>
@@ -58,8 +65,24 @@ class Txns extends Component {
               <td>{(parseInt(activeTxn.gasPrice,16)/1000000000000000000)} ETH</td>
             </tr>
             <tr>
+              <th>Gas Used by Transaction</th>
+              <td>{parseInt(this.props.txnReceipt.gasUsed,16).toLocaleString()}</td>
+            </tr>
+            <tr>
+              <th>Actual Transaction Cost</th>
+              <td>{(parseInt(this.props.txnReceipt.gasUsed,16) * (parseInt(activeTxn.gasPrice,16)))/1000000000000000000} ETH (${(parseInt(this.props.txnReceipt.gasUsed,16) * (parseInt(activeTxn.gasPrice,16))/1000000000000000000) * this.props.priceInfo.ethusd} USD)</td>
+            </tr>
+            <tr>
+              <th>Cumulative Gas Used</th>
+              <td>{parseInt(this.props.txnReceipt.cumulativeGasUsed,16).toLocaleString()}</td>
+            </tr>
+            <tr>
               <th>Nonce</th>
               <td>{parseInt(activeTxn.nonce,16)}</td>
+            </tr>
+            <tr>
+              <th>Input Data</th>
+              <td>{activeTxn.input}</td>
             </tr>
           </tbody>
           </table>
@@ -82,13 +105,18 @@ class Txns extends Component {
                 onClick={
                   () => {
                     this.props.selectTxnGo(true);
+                    this.props.getTxnReceiptGo(txn.hash);
                     this.props.activateTxnGo(txn.hash);
                     }
                   }>
-                Transaction Hash: {txn.hash}
+                <b>From:</b> {txn.from}
+                <br />
+                <b>To:</b> {txn.to}
+                <br />
+                <b>Amount:</b> {txn.value/1000000000000000000} ETH
                 <br />
                 <span>
-                  {beautifyTime(parseInt(block.timestamp,16))}
+                  <b>{beautifyTime(parseInt(block.timestamp,16))}</b>
                 </span>
               </div>
               )
@@ -119,9 +147,7 @@ class Txns extends Component {
                 }}> X </span>
             <h3>Transaction Information</h3>
             <hr />
-            <div>
-              {this.getActiveTxn(this.props.activeTxn)}
-            </div>
+            {this.getActiveTxn(this.props.activeTxn)}
           </div>
         </div>
       </div>
@@ -133,7 +159,11 @@ const mapStateToProps = (state) => {
     return {
       blockList: state.blockList,
       activeTxn: state.activeTxn,
-      txnSelected: state.txnSelected
+      txnSelected: state.txnSelected,
+      txnReceipt: state.txnReceipt,
+      priceInfo: state.priceInfo,
+      txnLoading: state.txnLoading,
+      priceInfo: state.priceInfo
     };
 }
 
@@ -141,6 +171,7 @@ const matchDispatchToProps = (dispatch) => {
     return {
       selectTxnGo: (bool) => dispatch(selectTxn(bool)),
       activateTxnGo: (txnNumber) => dispatch(activateTxn(txnNumber)),
+      getTxnReceiptGo: (txnHash) => dispatch(getTxnReceipt(txnHash))
     };
 }
 

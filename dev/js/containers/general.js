@@ -16,7 +16,7 @@ class GeneralInfo extends Component {
   }
 
   render() {
-    if (this.props.supplyLoading || this.props.priceLoading) {
+    if (this.props.supplyLoading || this.props.priceLoading || this.props.blocksLoading) {
       return (<p>'Fetching stats...'</p>);
     }
     return (
@@ -44,6 +44,14 @@ class GeneralInfo extends Component {
             </td>
             <td className='timestamp'>... as of {beautifyTime(this.props.priceInfo.ethusd_timestamp)}</td>
           </tr>
+          <tr>
+            <th className='subheading'>Last Block Mined:</th>
+            <th className='subheading'>Total Network Difficulty</th>
+          </tr>
+          <tr>
+            <td className='regular'>{parseInt(this.props.blockList[0].number, 16)}</td>
+            <td className='regular'>{parseInt(this.props.blockList[0].totalDifficulty, 16).toLocaleString()}</td>
+          </tr>
         </tbody>
       </table>);
   }
@@ -54,7 +62,9 @@ const mapStateToProps = (state) => {
         ethSupply: state.ethSupply,
         supplyLoading: state.supplyLoading,
         priceLoading: state.priceLoading,
-        priceInfo: state.priceInfo
+        priceInfo: state.priceInfo,
+        blocksLoading: state.blocksLoading,
+        blockList: state.blockList
     };
 }
 

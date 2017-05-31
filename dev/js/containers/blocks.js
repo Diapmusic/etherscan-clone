@@ -53,6 +53,10 @@ class Blocks extends Component {
               <td>{parseInt(activeBlock.difficulty,16).toLocaleString()}</td>
             </tr>
             <tr>
+              <th>Total Difficulty</th>
+              <td>{parseInt(activeBlock.totalDifficulty,16).toLocaleString()}</td>
+            </tr>
+            <tr>
               <th>Size</th>
               <td>{parseInt(activeBlock.size,16).toLocaleString()} bytes</td>
             </tr>
@@ -89,10 +93,10 @@ class Blocks extends Component {
               this.props.activateBlockGo(block.number);
               }
             }>
-            Block Number: {parseInt(block.number,16)}
+            <b>Block Number:</b> {parseInt(block.number,16)}
             <br />
             <span>
-              {beautifyTime(parseInt(block.timestamp,16))}
+              <b>{beautifyTime(parseInt(block.timestamp,16))}</b>
             </span>
           </div>
           )

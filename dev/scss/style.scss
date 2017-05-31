@@ -22,10 +22,11 @@ table {
   border: 2px groove black;
   padding: 2px;
   font-family: helvetica;
-  width: 520px;
+  width: 976px;
+  height: 838px;
 }
 
-.section {
+.row1 {
   background-color: #cccccc;
   border: 2px groove black;
   padding: 2px;
@@ -34,7 +35,22 @@ table {
   width: 470px;
   height: 400px;
   position: relative;
+  margin: 5px;
   display: inline-block;
+  float: left;
+}
+
+.row2 {
+  background-color: #cccccc;
+  border: 2px groove black;
+  padding: 2px;
+  font-family: helvetica;
+  margin: 0px;
+  width: 470px;
+  height: 400px;
+  position: relative;
+  margin: 5px;
+  display: block;
   float: left;
 }
 
@@ -71,6 +87,7 @@ table {
     padding: 2px;
     font-size: 13px;
     cursor: pointer;
+    font-size: 10px;
     span {
       font-size: 10px;
     }
@@ -94,6 +111,27 @@ table {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.4);
+  .blockInfo {
+  position: relative;
+  border: 2px solid black;
+  overflow-y: scroll;
+  height: 300px;
+  table {
+    tbody {
+      tr {
+        th {
+          font-size: 12px;
+          font-weight: bolder;
+          }
+        td {
+          font-size: 11px;
+          font-weight: normal;
+          word-wrap: break-word;
+          }
+        }
+      }
+    }  
+  }
   div {
     padding-left: 10px;
     padding-right: 10px;
@@ -128,20 +166,3 @@ table {
   }
 }
 
-.blockInfo {
-  table {
-    tbody {
-      tr {
-        th {
-          font-size: 12px;
-          font-weight: bolder;
-        }
-        td {
-          font-size: 11px;
-          font-weight: normal;
-        }
-      }
-    }
-  }
-  
-}
